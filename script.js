@@ -33,19 +33,7 @@ axios
   .catch(function (error) {
     console.log(error);
   });
-const alertPlaceholder = document.getElementById("alert");
-const showAlert = (message, type) => {
-  const wrapper = document.createElement("div");
-  wrapper.innerHTML = `<div id=alertS class="alert alert-${type} alert-dismissible" role="alert">
-      <div>${message}</div>
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>`;
 
-  alertPlaceholder.append(wrapper);
-  setTimeout(() => {
-    document.getElementById("alertS").remove();
-  }, 2000);
-};
 // Close Model Login
 closeModel("login", "login-modal");
 
@@ -149,7 +137,6 @@ function setupsUI() {
   }
 }
 
-
 const alertPlaceholder = document.getElementById("alert");
 const showAlert = (message, type) => {
   const wrapper = document.createElement("div");
@@ -178,6 +165,6 @@ function register() {
     headers: {
       "Content-Type": "application/json",
     },
-    // 
+    //
   });
 }
