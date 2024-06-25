@@ -148,3 +148,36 @@ function setupsUI() {
     loginDiv.style.setProperty("display", "none", "important");
   }
 }
+
+
+const alertPlaceholder = document.getElementById("alert");
+const showAlert = (message, type) => {
+  const wrapper = document.createElement("div");
+  wrapper.innerHTML = `<div id=alertS class="alert alert-${type} alert-dismissible" role="alert">
+      <div>${message}</div>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>`;
+
+  alertPlaceholder.append(wrapper);
+  setTimeout(() => {
+    document.getElementById("alertS").remove();
+  }, 2000);
+};
+function register() {
+  let username = document.getElementById("register-username").value;
+  let password = document.getElementById("register-password").value;
+  let confirmPassword = document.getElementById(
+    "register-confirm-password"
+  ).value;
+  if (password != confirmPassword) {
+    showAlert("كلمة المرور غير متطابقة", "danger");
+    return;
+  }
+  axios.post(`${baseUrl}register`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    // 
+  });
+}
