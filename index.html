@@ -11,21 +11,22 @@
 	<link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 	<script src="./node_modules/axios/dist/axios.js"></script>
-</head>	
+</head>
 <style>
 	.img {
 		width: 25px;
 		height: 20px;
-		justify-content: space-between ;
+		justify-content: space-between;
 
 
-		background-size: cover ;
+		background-size: cover;
 	}
 
 	img {
 		background-size: cover;
 	}
-	.alert{
+
+	.alert {
 		position: fixed;
 		right: 10px;
 		bottom: 10px;
@@ -54,15 +55,16 @@
 						<div class="mb-3">
 							<label for="pass-login" class="col-form-label">كلمة المرور:</label>
 							<input class="form-control" autocomplete="current-password" name="password" value="123456" type="password"
-							id="pass-login" placeholder="ادخل كلمة المرور">
+								id="pass-login" placeholder="ادخل كلمة المرور">
 						</div>
 						<!-- pattern="[A-ZÖÄÜ]{1,3} [A-Z]{2,4} [0-9]{1,4}" -->
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إغلاق</button>
-						<button id="login" type="submit" class="btn btn-primary">سجل الدخول</button>
-					</div>
-				</form>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إغلاق</button>
+					<button id="login" type="submit" class="btn btn-primary">سجل الدخول</button>
+				</div>
+
 			</div>
 		</div>
 	</div>
@@ -96,11 +98,7 @@
 							<input class="form-control" autocomplete="current-password" name="password" type="password"
 								id="register-password" placeholder="ادخل كلمة المرور">
 						</div>
-						<div class="mb-3">
-							<label for="register-confirm-password" class="col-form-label">كلمة المرور:</label>
-							<input class="form-control" autocomplete="current-password" name="password" type="password"
-								id="register-confirm-password" placeholder="اعد ادخال كلمة المرور">
-						</div>
+
 					</form>
 				</div>
 				<div class="modal-footer">
@@ -127,7 +125,7 @@
 							<a class="nav-link active" aria-current="page" href="#">Home</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="#">Profile</a>
+							<a class="nav-link" href="/page.html">Profile</a>
 						</li>
 					</ul>
 					<div id="login-div" class="d-flex w-100 justify-content-end mr-3 ">
@@ -147,13 +145,13 @@
 
 	<!--// Nav Bar //-->
 	<!-- =====================ALERT JAVASCRIPT ================================== -->
-	
+
 	<div id="alert" style="position: fixed;z-index:9999;width:30%;right:0;bottom:0"></div>
 
 	<!--//===================== END ALERT JAVASCRIPT ===========================//-->
 
 	<!--===================== MAIN CONTENT ===========================-->
-	
+
 	<div class="container">
 		<div class="d-flex flex-column mb-3 align-items-center ">
 
@@ -225,13 +223,13 @@
 			</div>
 		</div>
 	</div>
-		<!--// POSTS //-->
-		<!--//===================== MAIN CONTENT ===========================//-->
+	<!--// POSTS //-->
+	<!--//===================== MAIN CONTENT ===========================//-->
 
 
 
-		<script src="./script.js"></script>
 
 </body>
+<script src="./script.js"></script>
 
 </html>
