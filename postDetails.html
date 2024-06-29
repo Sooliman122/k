@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <!-- <link rel="stylesheet" href="style.css"> -->
+  <script src="./node_modules/bootstrap/dist/js/bootstrap.js"></script>
+  <!-- <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script> -->
+  <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <script src="./node_modules/axios/dist/axios.js"></script>
+
+
+
+  <style>
+    .img {
+      width: 25px;
+      height: 20px;
+
+
+
+      background-size: cover;
+    }
+
+    img {
+      background-size: cover;
+    }
+
+    .alert {
+      position: fixed;
+      right: 10px;
+      bottom: 10px;
+      z-index: 9;
+    }
+
+    .add {
+      width: 45px;
+      height: 45px;
+      background-color: rgb(34, 78, 239);
+      text-align: center;
+      font-size: 30px;
+      display: none;
+      position: fixed;
+      right: 90px;
+      bottom: 100px;
+      border-radius: 50%;
+      color: white;
+      display: flex;
+      flex-direction: column;
+
+
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container  d-flex justify-content-center ">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary shadow rounded pt-4 col-9">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Social</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Profile</a>
+            </li>
+          </ul>
+          <div id="login-div" class="d-flex w-100 justify-content-end mr-3 ">
+            <button type="button" class="btn btn-outline-success shadow-lg rounded" data-bs-toggle="modal"
+              data-bs-target="#login-model">Login</button>
+            <button type="button" class="btn btn-outline-success mx-2 shadow-lg rounded " data-bs-toggle="modal"
+              data-bs-target="#register-model">Requiter</button>
+          </div>
+
+          <div id="logout-div" class="d-flex w-100 justify-content-end mr-3 ">
+            <div class="mx-4">
+              <img id="user-img" width="40px" class="mx-1 rounded-circle border border-2" src="/logo2.jpg" alt="">
+              <b id="user-name" class="text-center">@hhhh</b>
+            </div>
+            <button id="logout" type="button" class="btn btn-danger shadow-lg rounded"
+              data-bs-toggle="modal">Logout</button>
+
+          </div>
+        </div>
+      </div>
+    </nav>
+  </div>
+  <!-- end Nav Bar -->
+  <!-- ===============LOGIN MODELS ==========-->
+  <div class="modal fade" id="login-model" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header d-flex " style="flex-direction: column-reverse;">
+          <b class="modal-title fs-5" id="exampleModalLabel">صفحة تسجيل الدخول</b>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form dir="rtl">
+            <div class="mb-3">
+              <label for="username" class="col-form-label">اسم المستخدم:</label>
+              <input type="text" name="username" autocomplete="off" class="form-control" value="sooliman12"
+                id="username" placeholder="ادخل اسم المستخدم">
+            </div>
+            <div class="mb-3">
+              <label for="pass-login" class="col-form-label">كلمة المرور:</label>
+              <input class="form-control" autocomplete="current-password" name="password" value="123456" type="password"
+                id="pass-login" placeholder="ادخل كلمة المرور">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إغلاق</button>
+          <button id="login" type="submit" class="btn btn-primary">سجل الدخول</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <!--// ====================LOGIN 	MODELS================== //-->
+
+
+  <!-- ===============register MODELS ==========-->
+
+
+  <div class="modal fade" id="register-model" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header d-flex " style="flex-direction: column-reverse;">
+          <b class="modal-title fs-5" id="exampleModalLabel">تسجيل مستخدم جديد</b>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form dir="rtl">
+            <div class="mb-3 d-flex ">
+              <label for="register-image" class="col-form-label text-center">اضافة صورة:</label>
+              <input style="width: 100%;" type="file" name="image" id="register-image">
+            </div>
+            <div class="mb-3">
+              <label for="register-username" class="col-form-label">اسم المستخدم:</label>
+              <div class="input-group mb-3" dir="ltr">
+                <span class="input-group-text" id="basic-addon1">@</span>
+                <input id="register-username" type="text" class="form-control" placeholder="Username"
+                  aria-label="Username" aria-describedby="basic-addon1">
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="register-name" class="col-form-label">الاســم :</label>
+              <input dir="ltr" type="text" autocomplete="off" class="form-control" id="register-name"
+                placeholder="name">
+            </div>
+            <div class="mb-3">
+              <label for="register-password" class="col-form-label">كلمة المرور:</label>
+              <input dir="ltr" class="form-control" autocomplete="current-password" name="password" type="password"
+                id="register-password" placeholder="Enter The Password">
+            </div>
+            <div class="mb-3">
+              <label for="register-confirm-password" class="col-form-label">كلمة المرور:</label>
+              <input dir="ltr" class="form-control" autocomplete="current-password" name="password" type="password"
+                id="register-confirm-password" placeholder="Again Enter The Password">
+            </div>
+
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إغلاق</button>
+          <button id="register" type="button" class="btn btn-primary">تسجيل</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--// ====================register 	MODELS================== //-->
+  <!-- content -->
+  <div class="container">
+    <div class="row  justify-content-center ">
+      <div class="col-9 text-center mt-5 ">
+        <div class="body-profil shadow rounded pt-4 bg-body-tertiary border rounded-3">
+          <h1>hi</h1>
+          <span>@sooliman</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--// content //-->
+
+  <!-- alert  -->
+  <div id="alert" style="position: fixed;z-index:9999;width:30%;right:0;bottom:0"></div>
+  <!-- //alert// -->
+</body>
+<script src="./mainLogec.js"></script>
+<script src="./postDetails.js"></script>
+
+<script>
+</script>
+
+</html>
