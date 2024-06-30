@@ -1,37 +1,39 @@
+
+
 setupsUI();
 function refresh() {
   axios
-    .get(`${baseUrl}posts?limit=50`)
+    .get(`${baseUrl}posts?page=931`)
     .then(function (response) {
       let posts = response.data.data;
       console.log(posts);
       document.getElementById("posts").innerHTML = "";
       for (let post of posts) {
         let content = `
-    <div class="card shadow my-5 ">
+    <div  class="card shadow my-5 ">
       <div class="card-header d-flex justify-content-between">
-      <div>
-          <img width="40px" class="rounded-circle border border-2" src=${
+        <div>
+          <img width="40px" class=" m-4 rounded-circle border border-2" src=${
             post.author.profile_image
           } alt="">
           <b>@${post.author.username}</b>
-      </div >
-${
-  post.author.id === JSON.parse(localStorage.getItem("username")).id
-    ? `        <div >
-        <button id="${post.id}" name="delete-post" class="float-end  shadow my-3 border text-center align-items-center rounded-circle "><i class="bi bi-trash"></i></button></div>`
-    : ""
-}
+        </div >
+        ${
+          post.author.id === JSON.parse(localStorage.getItem("username")).id
+            ? `        <div >
+        <button id="${post.id}" onclick="btnDelete(${post.id})"  name="delete-post" class="float-end  shadow my-3 border text-center align-items-center rounded-circle "><i class="bi bi-trash"></i></button></div>`
+            : ""
+        }
 
       </div>
-      <div class="card-body">
+      <div class="card-body" onclick="postClicked(${post.id})">
         <img src=${
           post.image
             ? post.image
             : "https://images.tarmeezacademy.com/posts/Gm0PlKAlhZYLwD4.jpg"
         } class="w-100 " height="400px" alt="">
         <h6 style="color: #9d9ca0;">${post.created_at}</h6>
-        <h2>${post.title}</h2>
+        <h2>${post.title != null ? post.title : ""}</h2>
         <p>${post.body}</p>
         <hr>
         <div>
@@ -39,7 +41,7 @@ ${
         <span>${post.comments_count}</span> 
         command
       </div>
-    </div>
+    </div >
 
 
     `;
@@ -97,36 +99,38 @@ async function createNewPost() {
     });
 }
 // END CREATE NEW POST//
-// setups
-// function setupsUI() {
-//   let loginDiv = document.getElementById("login-div");
-//   let logoutDiv = document.getElementById("logout-div");
-//   if (localStorage.getItem("token") == null) {
-//     logoutDiv.style.setProperty("display", "none", "important");
-//     loginDiv.style.setProperty("display", "flex", "important");
-//     document.getElementById("add").style.display = "none";
-//   } else {
-//     document.getElementById("add").style.display = "block";
-//     logoutDiv.style.setProperty("display", "flex", "important");
-//     loginDiv.style.setProperty("display", "none", "important");
-//     let user = getCurrentUser();
-//     document.getElementById("user-name").innerHTML = `@${user.username}`;
-//     document.getElementById("user-img").src = user.profile_image;
-//   }
-// }
-// function getCurrentUser() {
-//   let user = null;
-//   if (localStorage.getItem("username") != null) {
-//     user = JSON.parse(localStorage.getItem("username"));
-//   }
-//   return user;
-// }
-let buttonDelete = document.getElementsByName("delete-post");
 
-buttonDelete.forEach((element) => {
-  console.log(element);
-  element.addEventListener("click", function (e) {
-    console.log(this.className); // logs the className of my_element
-    console.log(e.currentTarget === this); // logs `true`
-  });
-});
+
+function postClicked(postId) {
+  window.location = `postDetails.html?postId=${postId}`
+
+}
+// function btnDelete(postId) {
+//   let token = localStorage.getItem("token")
+//   let headers = {
+    
+//   }
+
+  
+//    axios.delete(`${baseUrl}posts/${postId}`).then((response) => {
+//      console.log(response.data);
+//    });
+// }
+function btnDelete(postId) {
+  let token = localStorage.getItem("token");
+  const headers = {
+    "Content-Type": "application/json",
+    authorization: `Bearer ${token}`,
+  };
+  axios
+    .delete(`${baseUrl}posts/${postId}`, {
+      headers: headers,
+    })
+    .then((response) => {
+      console.log(response.data);
+      refresh()
+    })
+    .catch((error) => {
+      showAlert("hhhhhhhhhh")
+    });
+}
