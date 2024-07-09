@@ -1,13 +1,18 @@
 
 function refresh() {
   axios
-    .get(`${baseUrl}posts?page=941`)
+    .get(`${baseUrl}posts?limit=50`)
     .then(function (response) {
       let posts = response.data.data;
       console.log(posts);
       document.getElementById("posts").innerHTML = "";
       for (let post of posts) {
         let bool = false;
+        let profileImage = post.author.profile_image;
+        if (!profileImage) {
+
+            profileImage = "/logo2.jpg";
+          }
         if (localStorage.getItem("token") != null) {
           if (
             post.author.id === JSON.parse(localStorage.getItem("username")).id
@@ -21,7 +26,7 @@ function refresh() {
                 id="${post.id}"
                 onclick="btnDelete(${post.id})"
                 name="delete-post"
-                class="float-end  shadow my-3 border text-center align-items-center rounded-circle ">
+                class="float-end  shadow my-1 border text-center align-items-center rounded-circle ">
               <i class="bi bi-trash"></i>
               </button>
             </div>`;
@@ -29,17 +34,11 @@ function refresh() {
     <div  class="card shadow my-5 ">
       <div class="card-header d-flex justify-content-between">
         <div>
-          <img width="40px" class=" m-4 rounded-circle border border-2" src="${
-            post.author.profile_image || "./logo2.jpg"
-          }" alt="">
+          <img width="40px" class=" m-4 rounded-circle border border-2" src="${profileImage}" alt="">
           <b>@${post.author.username}</b>
         </div >
 
-        ${
-          bool
-            ? deleteBtu
-            : ""
-        }
+        ${bool ? deleteBtu : ""}
 
       </div>
       <div class="card-body" onclick="postClicked(${post.id})">
@@ -107,11 +106,11 @@ async function createNewPost() {
     .then((response) => {
       showAlert("تمت اضافة المنشور بنجاح");
       closeModel("add-model");
-      refresh();
+
     })
     .catch((error) => {
       showAlert(error.response.data.message, "danger");
-      refresh();
+
     });
 }
 // END CREATE NEW POST//

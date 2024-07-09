@@ -175,13 +175,14 @@ function register() {
       console.log(response.data.user.profile_image);
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("username", JSON.stringify(response.data.user));
-      closeModel("register-model");
+      // closeModel("register-model");
       setupsUI();
 
       showAlert("تم تسجيل المستخدم بنجاح");
     })
     .catch((error) => {
       showAlert(error.response.data.message, "danger");
+      return
     });
 }
 //===========END REGISTER=====//
