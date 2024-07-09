@@ -1,5 +1,3 @@
-
-
 setupsUI();
 let baseUrl = "https://tarmeezacademy.com/api/v1/";
 function setupsUI() {
@@ -68,14 +66,20 @@ function login() {
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("username", JSON.stringify(response.data.user));
       console.log(response.data.user.username);
-      
+      if (
+        (window.location.pathname == "/") |
+        (window.location.pathname == "/index.html")
+      ) {
+        refresh()
+      } else {
+        getPost()
+      }
       showAlert("😍تم تسجيل الدخول بنجاح", "success");
       closeModel("login-model");
       setupsUI();
-
     })
     .catch(function (error) {
-      let message = 'error.response.data.message;'
+      let message = "error.response.data.message;";
       // Handle network errors and Axios errors
       if (error.response && error.response.status === 401) {
         // Handle network errors and Axios errors
@@ -121,6 +125,14 @@ function logout() {
   localStorage.removeItem("token");
   localStorage.removeItem("username");
   setupsUI();
+    if (
+      (window.location.pathname == "/") |
+      (window.location.pathname == "/index.html")
+    ) {
+      refresh();
+    } else {
+      getPost();
+    }
   showAlert("😊تم تسجيل الخروج بنجاح", "danger");
 }
 
@@ -129,7 +141,7 @@ function logout() {
 // اظهار|اخفاء تسجيل الدخول|الخروج
 
 const alertPlaceholder = document.getElementById("alert");
-const showAlert = (message, type = "success") => {
+const showAlert = (message, type = "success", win='') => {
   const wrapper = document.createElement("div");
   wrapper.innerHTML = `<div id=alertS class="alert alert-${type} alert-dismissible" role="alert">
       <div>${message}</div>
@@ -139,8 +151,7 @@ const showAlert = (message, type = "success") => {
   alertPlaceholder.append(wrapper);
   setTimeout(() => {
     document.getElementById("alertS").remove();
-  window.location=window.location
-
+    win;
   }, 2000);
 };
 
@@ -182,7 +193,7 @@ function register() {
     })
     .catch((error) => {
       showAlert(error.response.data.message, "danger");
-      return
+      return;
     });
 }
 //===========END REGISTER=====//

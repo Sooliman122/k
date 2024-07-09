@@ -1,18 +1,16 @@
-
 function refresh() {
   axios
     .get(`${baseUrl}posts?limit=50`)
     .then(function (response) {
       let posts = response.data.data;
-      console.log(posts);
+      // console.log(posts);
       document.getElementById("posts").innerHTML = "";
       for (let post of posts) {
         let bool = false;
         let profileImage = post.author.profile_image;
         if (!profileImage) {
-
-            profileImage = "/logo2.jpg";
-          }
+          profileImage = "/logo2.jpg";
+        }
         if (localStorage.getItem("token") != null) {
           if (
             post.author.id === JSON.parse(localStorage.getItem("username")).id
@@ -104,20 +102,24 @@ async function createNewPost() {
       headers: headers,
     })
     .then((response) => {
+      document.getElementById("title-post").value = "";
+      document.getElementById("text-post").value = "";
+      document.getElementById("image-post").value = "";
       showAlert("تمت اضافة المنشور بنجاح");
+      refresh();
       closeModel("add-model");
-
     })
     .catch((error) => {
       showAlert(error.response.data.message, "danger");
-
     });
 }
 // END CREATE NEW POST//
-
+let path = "";
 function postClicked(postId) {
+  path = `postDetails.html?postId=${postId}`;
   window.location = `postDetails.html?postId=${postId}`;
 }
+
 // function btnDelete(postId) {
 //   let token = localStorage.getItem("token")
 //   let headers = {
