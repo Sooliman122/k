@@ -1,5 +1,6 @@
 const urlParam = new URLSearchParams(window.location.search);
 const postId = urlParam.get("postId");
+
 function getPost() {
   axios.get(`${baseUrl}posts/${postId}`).then((response, data) => {
     response = response.data.data;
@@ -11,7 +12,6 @@ function getPost() {
     let deleteBtu = `
             <div>
               <button
-                id="${response.id}"
                 onclick="btnDelete(${response.id})"
                 name="delete-post"
                 class="float-end  shadow  border text-center align-items-center rounded-circle ">
@@ -38,7 +38,7 @@ function getPost() {
                <img width="40px" height="40px" class=" rounded-circle border border-2" src="${comment.author.profile_image}" alt="">
                <b>@${comment.author.username}</b>
                ${comment.id}
-               <div id="div-delete">${deleteCommit}</div>
+               <div onclick="ax(${comment.id})" id="div-delete">${deleteCommit}</div>
              </div>
              <div class=" shadow rounded  border rounded-3 py-3 bg-transparent  border border-secondary-subtle w-100 text-start ">
                <h6 class="mx-5">${comment.body}</h6>
@@ -185,3 +185,20 @@ function commitBtn(postId) {
     showAlert("you must login first");
   }
 }
+function ax(commentId) {
+  let token = localStorage.getItem("token");
+  const headers = {
+    "Content-Type": "application/json",
+    authorization: `Bearer ${token}`,
+  };
+  axios
+    .get(`${baseUrl}posts/4/comments`, {
+      headers: headers,
+    })
+    .then((response) => {
+      for (let i of response.data.data) {
+        console.log(i.id);
+      }
+    });
+}
+ax();

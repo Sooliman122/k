@@ -1,5 +1,5 @@
 
-function refresh() {
+async function refresh() {
   axios
     .get(`${baseUrl}posts?limit=50`)
     .then(function (response) {
@@ -82,37 +82,37 @@ refresh();
  * that you want to hide when the element with ID `el` is clicked.
  */
 
-// Create New Post
-document.getElementById("add-post").addEventListener("click", createNewPost);
-async function createNewPost() {
-  let title = document.getElementById("title-post").value;
-  let body = document.getElementById("text-post").value;
-  let image = document.getElementById("image-post").files[0];
+// // Create New Post
+// document.getElementById("add-post").addEventListener("click", createNewPost);
+// async function createNewPost() {
+//   let title = document.getElementById("title-post").value;
+//   let body = document.getElementById("text-post").value;
+//   let image = document.getElementById("image-post").files[0];
 
-  let formData = new FormData();
-  formData.append("title", title);
-  formData.append("body", body);
-  formData.append("image", image);
+//   let formData = new FormData();
+//   formData.append("title", title);
+//   formData.append("body", body);
+//   formData.append("image", image);
 
-  const token = localStorage.getItem("token");
-  const headers = {
-    "Content-Type": "multipart/form-data",
-    Authorization: `Bearer ${token}`,
-  };
-  axios
-    .post(`${baseUrl}posts`, formData, {
-      headers: headers,
-    })
-    .then((response) => {
-      showAlert("تمت اضافة المنشور بنجاح");
-      closeModel("add-model");
+//   const token = localStorage.getItem("token");
+//   const headers = {
+//     "Content-Type": "multipart/form-data",
+//     Authorization: `Bearer ${token}`,
+//   };
+//   axios
+//     .post(`${baseUrl}posts`, formData, {
+//       headers: headers,
+//     })
+//     .then((response) => {
+//       showAlert("تمت اضافة المنشور بنجاح");
+//       closeModel("add-model");
 
-    })
-    .catch((error) => {
-      showAlert(error.response.data.message, "danger");
+//     })
+//     .catch((error) => {
+//       showAlert(error.response.data.message, "danger");
 
-    });
-}
+//     });
+// }
 // END CREATE NEW POST//
 
 function postClicked(postId) {

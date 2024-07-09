@@ -1,5 +1,3 @@
-
-
 setupsUI();
 let baseUrl = "https://tarmeezacademy.com/api/v1/";
 function setupsUI() {
@@ -68,14 +66,14 @@ function login() {
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("username", JSON.stringify(response.data.user));
       console.log(response.data.user.username);
-      
+
       showAlert("😍تم تسجيل الدخول بنجاح", "success");
       closeModel("login-model");
       setupsUI();
-
+      getPost();
     })
     .catch(function (error) {
-      let message = 'error.response.data.message;'
+      let message = "error.response.data.message;";
       // Handle network errors and Axios errors
       if (error.response && error.response.status === 401) {
         // Handle network errors and Axios errors
@@ -139,8 +137,7 @@ const showAlert = (message, type = "success") => {
   alertPlaceholder.append(wrapper);
   setTimeout(() => {
     document.getElementById("alertS").remove();
-  window.location=window.location
-
+    window.location = window.location;
   }, 2000);
 };
 
@@ -175,14 +172,44 @@ function register() {
       console.log(response.data.user.profile_image);
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("username", JSON.stringify(response.data.user));
-      // closeModel("register-model");
+      closeModel("register-model");
       setupsUI();
 
       showAlert("تم تسجيل المستخدم بنجاح");
     })
     .catch((error) => {
       showAlert(error.response.data.message, "danger");
-      return
     });
 }
 //===========END REGISTER=====//
+// Create New Post
+if (document.getElementById("add-post")) {
+  document.getElementById("add-post").addEventListener("click", createNewPost);
+}
+async function createNewPost() {
+  let title = document.getElementById("title-post").value;
+  let body = document.getElementById("text-post").value;
+  let image = document.getElementById("image-post").files[0];
+
+  let formData = new FormData();
+  formData.append("title", title);
+  formData.append("body", body);
+  formData.append("image", image);
+
+  const token = localStorage.getItem("token");
+  const headers = {
+    "Content-Type": "multipart/form-data",
+    Authorization: `Bearer ${token}`,
+  };
+  axios
+    .post(`${baseUrl}posts`, formData, {
+      headers: headers,
+    })
+    .then((response) => {
+      showAlert("تمت اضافة المنشور بنجاح");
+      closeModel("add-model");
+    })
+    .catch((error) => {
+      showAlert(error.response.data.message, "danger");
+    });
+}
