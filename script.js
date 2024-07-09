@@ -1,37 +1,52 @@
 
-
-setupsUI();
 function refresh() {
   axios
-    .get(`${baseUrl}posts?page=931`)
+    .get(`${baseUrl}posts?limit=50`)
     .then(function (response) {
       let posts = response.data.data;
       console.log(posts);
       document.getElementById("posts").innerHTML = "";
       for (let post of posts) {
+        let bool = false;
+        let profileImage = post.author.profile_image;
+        if (!profileImage) {
+
+            profileImage = "/logo2.jpg";
+          }
+        if (localStorage.getItem("token") != null) {
+          if (
+            post.author.id === JSON.parse(localStorage.getItem("username")).id
+          ) {
+            bool = true;
+          }
+        }
+        let deleteBtu = `
+            <div>
+              <button
+                id="${post.id}"
+                onclick="btnDelete(${post.id})"
+                name="delete-post"
+                class="float-end  shadow my-1 border text-center align-items-center rounded-circle ">
+              <i class="bi bi-trash"></i>
+              </button>
+            </div>`;
         let content = `
     <div  class="card shadow my-5 ">
       <div class="card-header d-flex justify-content-between">
         <div>
-          <img width="40px" class=" m-4 rounded-circle border border-2" src=${
-            post.author.profile_image
-          } alt="">
+          <img width="40px" class=" m-4 rounded-circle border border-2" src="${profileImage}" alt="">
           <b>@${post.author.username}</b>
         </div >
-        ${
-          post.author.id === JSON.parse(localStorage.getItem("username")).id
-            ? `        <div >
-        <button id="${post.id}" onclick="btnDelete(${post.id})"  name="delete-post" class="float-end  shadow my-3 border text-center align-items-center rounded-circle "><i class="bi bi-trash"></i></button></div>`
-            : ""
-        }
+
+        ${bool ? deleteBtu : ""}
 
       </div>
       <div class="card-body" onclick="postClicked(${post.id})">
-        <img src=${
+        <img src="${
           post.image
             ? post.image
             : "https://images.tarmeezacademy.com/posts/Gm0PlKAlhZYLwD4.jpg"
-        } class="w-100 " height="400px" alt="">
+        }" class="w-100 " height="400px" alt="">
         <h6 style="color: #9d9ca0;">${post.created_at}</h6>
         <h2>${post.title != null ? post.title : ""}</h2>
         <p>${post.body}</p>
@@ -50,7 +65,7 @@ function refresh() {
     })
 
     .catch(function (error) {
-      console.log(error);
+      showAlert(error.response.data.message);
     });
 }
 refresh();
@@ -91,27 +106,24 @@ async function createNewPost() {
     .then((response) => {
       showAlert("تمت اضافة المنشور بنجاح");
       closeModel("add-model");
-      refresh();
+
     })
     .catch((error) => {
       showAlert(error.response.data.message, "danger");
-      refresh();
+
     });
 }
 // END CREATE NEW POST//
 
-
 function postClicked(postId) {
-  window.location = `postDetails.html?postId=${postId}`
-
+  window.location = `postDetails.html?postId=${postId}`;
 }
 // function btnDelete(postId) {
 //   let token = localStorage.getItem("token")
 //   let headers = {
-    
+
 //   }
 
-  
 //    axios.delete(`${baseUrl}posts/${postId}`).then((response) => {
 //      console.log(response.data);
 //    });
@@ -128,9 +140,9 @@ function btnDelete(postId) {
     })
     .then((response) => {
       console.log(response.data);
-      refresh()
+      refresh();
     })
     .catch((error) => {
-      showAlert("hhhhhhhhhh")
+      showAlert("hhhhhhhhhh");
     });
 }

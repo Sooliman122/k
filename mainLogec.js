@@ -1,5 +1,7 @@
-let baseUrl = "https://tarmeezacademy.com/api/v1/";
+
+
 setupsUI();
+let baseUrl = "https://tarmeezacademy.com/api/v1/";
 function setupsUI() {
   let loginDiv = document.getElementById("login-div");
   let logoutDiv = document.getElementById("logout-div");
@@ -66,13 +68,14 @@ function login() {
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("username", JSON.stringify(response.data.user));
       console.log(response.data.user.username);
+      
       showAlert("😍تم تسجيل الدخول بنجاح", "success");
-      setupsUI();
       closeModel("login-model");
-      refresh();
+      setupsUI();
+
     })
     .catch(function (error) {
-      let message = error.response.data.message;
+      let message = 'error.response.data.message;'
       // Handle network errors and Axios errors
       if (error.response && error.response.status === 401) {
         // Handle network errors and Axios errors
@@ -136,6 +139,8 @@ const showAlert = (message, type = "success") => {
   alertPlaceholder.append(wrapper);
   setTimeout(() => {
     document.getElementById("alertS").remove();
+  window.location=window.location
+
   }, 2000);
 };
 
@@ -170,13 +175,14 @@ function register() {
       console.log(response.data.user.profile_image);
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("username", JSON.stringify(response.data.user));
-      closeModel("register-model");
+      // closeModel("register-model");
       setupsUI();
 
       showAlert("تم تسجيل المستخدم بنجاح");
     })
     .catch((error) => {
       showAlert(error.response.data.message, "danger");
+      return
     });
 }
 //===========END REGISTER=====//
